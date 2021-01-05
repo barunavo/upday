@@ -1,0 +1,7 @@
+.terraform/
+.terraform
+.terraform/*
+terraform.tfstate
+terraform.tfstate.backup
+kubeconfig_upday-eks-cluster
+.terraform.lock.hcl
