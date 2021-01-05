@@ -57,11 +57,35 @@ terraform apply -auto-approve
 # grab our EKS config
 aws eks update-kubeconfig --name upday-eks-cluster --region ap-south-1 --profile xxx
 
-kubectl get nodes
-kubectl get deploy
-kubectl get pods
-kubectl get svc
+
+$ kubectl get nodes
+NAME                                       STATUS   ROLES    AGE   VERSION
+ip-10-0-2-48.ap-south-1.compute.internal   Ready    <none>   57m   v1.17.12-eks-7684af
+
+$ kubectl get deploy
+NAME    READY   UP-TO-DATE   AVAILABLE   AGE
+upday   2/2     2            2           48m
+
+
+$ kubectl get pods
+NAME                     READY   STATUS    RESTARTS   AGE
+upday-65cf97f99b-dkzbd   1/1     Running   0          27m
+upday-65cf97f99b-htxk8   1/1     Running   0          28m
+
+$ kubectl get svc
+NAME         TYPE           CLUSTER-IP      EXTERNAL-IP                                                               PORT(S)          AGE
+kubernetes   ClusterIP      172.20.0.1      <none>                                                                    443/TCP          64m
+upday        LoadBalancer   172.20.148.76   a2659439847f7442991e6ca224cd62fe-480122927.ap-south-1.elb.amazonaws.com   8080:31774/TCP   55m
+
+$ curl a2659439847f7442991e6ca224cd62fe-480122927.ap-south-1.elb.amazonaws.com:8080
+Hello World from upday!
+
+$ curl a2659439847f7442991e6ca224cd62fe-480122927.ap-south-1.elb.amazonaws.com:8080/actuator/health
+{"status":"UP"}
+
 ``` 
+
+
 
 ###### Cleanup
 
